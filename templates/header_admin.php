@@ -1,3 +1,4 @@
+<?php include 'connect.php';?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
   <title>SB Admin - Dashboard</title>
 
@@ -79,7 +81,7 @@
           <a class="dropdown-item" href="change_pass_admin.php">Change Password</a>
            <a class="dropdown-item" href="change_pass_admin.php">Imformation</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          <a class="dropdown-item" href="logout_admin.php" data-toggle="modal" data-target="#logoutModal">Logout</a>
         </div>
       </li>
     </ul>

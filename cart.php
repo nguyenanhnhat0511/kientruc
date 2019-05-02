@@ -1,5 +1,8 @@
 <?php include 'templates/header.php'; ?>
- 
+  <?php if( isset($_GET['delete'])){
+    echo '<script>alert("xóa thành công")</script>';
+
+  }?>
   <!-- catg header banner section -->
   <section id="aa-catg-head-banner">
    <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
@@ -38,39 +41,32 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <?php 
+                      $tongtien = 0;
+                      $id =  $_SESSION['id'];
+                        $sql = "SELECT c.id, p.image,c.count, p.name, p.price , p.sale FROM cart c join phone p on c.id_phone = p.id 
+where c.id_user = $id";
+
+                      $result = mysqli_query($conn, $sql);
+
+                      if (mysqli_num_rows($result) > 0) {
+                          // output data of each row
+                          while($row = mysqli_fetch_assoc($result)) {
+                            $tongtien += ($row['price'] * $row['count']);
+
+                      ?>
+
                       <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="#"><img src="img/man/polo-shirt-1.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$250</td>
-                        <td><input class="aa-cart-quantity" type="number" value="1"></td>
-                        <td>$250</td>
+                        <td><a class="remove" href="http://localhost:8081/bai4/rest/services/xoasanpham/<?= $row['id']; ?>/<?= $_SESSION['id']; ?>"><fa class="fa fa-close"></fa></a></td>
+                        <td><a href="#"><img src="<?= $row['image'] ?>" alt="img"></a></td>
+                        <td><a class="aa-cart-title" href="#"><?= $row['name']; ?></a></td>
+                        <td><?= number_format($row['price']); ?> VNĐ </td>
+                        <td><input class="aa-cart-quantity" type="number" value="<?= $row['count']; ?>"></td>
+                        <td><?= number_format(  $row['price'] * $row['count'])?> VNĐ</td>
                       </tr>
-                      <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="#"><img src="img/man/polo-shirt-2.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$150</td>
-                        <td><input class="aa-cart-quantity" type="number" value="1"></td>
-                        <td>$150</td>
-                      </tr>
-                      <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="#"><img src="img/man/polo-shirt-3.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$50</td>
-                        <td><input class="aa-cart-quantity" type="number" value="1"></td>
-                        <td>$50</td>
-                      </tr>
-                      <tr>
-                        <td colspan="6" class="aa-cart-view-bottom">
-                          <div class="aa-cart-coupon">
-                            <input class="aa-coupon-code" type="text" placeholder="Mã thưởng">
-                            <input class="aa-cart-view-btn" type="submit" value="Sử dụng mã thưởng">
-                          </div>
-                          <input class="aa-cart-view-btn" type="submit" value="Cập nhật giỏ hàng">
-                        </td>
-                      </tr>
+                    <?php }}
+                    ?>
+                   
                       </tbody>
                   </table>
                 </div>
@@ -82,15 +78,12 @@
                  <tbody>
                    <tr>
                      <th>Tổng số tiền </th>
-                     <td>$450</td>
+                     <td><?= number_format($tongtien)?> VNĐ</td>
                    </tr>
-                   <tr>
-                     <th>Tiền phải trả</th>
-                     <td>$450</td>
-                   </tr>
+                  
                  </tbody>
                </table>
-               <a href="#" class="aa-cart-view-btn">thủ tục thanh toán
+               <a href="http://localhost:8081/bai4/rest/services/thanhtoan/<?= $tongtien?>/<?= $id ?>" class="aa-cart-view-btn">thủ tục thanh toán
 </a>
              </div>
            </div>

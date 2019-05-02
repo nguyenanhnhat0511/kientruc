@@ -29,14 +29,14 @@
           <h4>Forgot your password?</h4>
           <p>Enter your email address and we will send you instructions on how to reset your password.</p>
         </div>
-        <form>
+        <form action="http://localhost:8081/bai4/rest/services/forgot-pass/" method="post">
           <div class="form-group">
             <div class="form-label-group">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Enter email address" required="required" autofocus="autofocus">
+              <input type="email" id="inputEmail" class="form-control" placeholder="Enter email address" required="required" autofocus="autofocus" name="email">
               <label for="inputEmail">Enter email address</label>
             </div>
           </div>
-          <a class="btn btn-primary btn-block" href="login.html">Reset Password</a>
+          <button type="submit" class="btn btn-primary btn-block" >Reset Password</button>
         </form>
         <div class="text-center">
           <a class="d-block small mt-3" href="register.php">Register an Account</a>

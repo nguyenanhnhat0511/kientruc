@@ -24,28 +24,17 @@
         <div class="aa-myaccount-area">         
             <div class="row">
               <div class="col-md-6">
-                <div class="aa-myaccount-login">
-                <h4>Login</h4>
-                 <form action="" class="aa-login-form">
-                  <label for="">Username or Email address<span>*</span></label>
-                   <input type="text" placeholder="Username or email">
-                   <label for="">Password<span>*</span></label>
-                    <input type="password" placeholder="Password">
-                    <button type="submit" class="aa-browse-btn">Login</button>
-                    <label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
-                    <p class="aa-lost-password"><a href="#">Lost your password?</a></p>
-                  </form>
-                </div>
+                  <img style="width: 80%;" src="<?php echo $_SESSION['picture'] ?>">
+
               </div>
               <div class="col-md-6">
                 <div class="aa-myaccount-register">                 
                  <h4>Register</h4>
                  <form action="" class="aa-login-form">
-                    <label for="">Username or Email address<span>*</span></label>
-                    <input type="text" placeholder="Username or email">
-                    <label for="">Password<span>*</span></label>
-                    <input type="password" placeholder="Password">
-                    <button type="submit" class="aa-browse-btn">Register</button>                    
+                    <label for="">Email<span>*</span></label>
+                    <input type="text" value="<?php echo $_SESSION['email'] ?>" placeholder="Username or email">
+                    <label for="">Username<span>*</span></label>
+                    <input type="text" value="<?php echo $_SESSION['familyName'] ?>" placeholder="Password">
                   </form>
                 </div>
               </div>

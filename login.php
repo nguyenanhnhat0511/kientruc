@@ -1,3 +1,25 @@
+<?php
+    require_once "config.php";
+    require_once "connect.php";
+	if (isset($_SESSION['access_token'])) {
+		header('Location: index.php');
+		exit();
+	}
+	if (isset($_SESSION['username']))
+    {
+        header("refresh:1 ; url = index.php");
+        echo 'User has been signed in. Redirecting to portal ...';
+        die(); // stop redering the rest of the page
+    }
+    if (isset($_SESSION['admin']))
+    {
+        header("refresh:1 ; url = admin.php");
+        echo 'Đăng nhập vào admin ...';
+        die(); // stop redering the rest of the page
+    }
+
+	$loginURL = $gClient->createAuthUrl();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,6 +50,70 @@
 <!--===============================================================================================-->
 </head>
 <body>
+
+
+	<?php
+    	
+
+    //otherwise, user must sign in to access 'ci.php'page
+    $msg = '';
+    if (isset($_POST['login'])&& !empty($_POST['username'])&& !empty($_POST['password']))
+    {
+        $ch = curl_init();
+        $username = $_POST['username'];
+
+        curl_setopt($ch, CURLOPT_URL, "http://localhost:8081/bai4/rest/services/sign-in-secure/");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('username' => $_POST['username'],'password' => $_POST['password'])));
+    
+        //receive server's respone
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $server_output = curl_exec($ch);
+        curl_close($ch);
+        
+        if($server_output == "true")
+        {
+            $_SESSION['valid'] = true;
+            $_SESSION['timeout'] = time();
+            $sql = "SELECT * FROM Customer where username ='$username'";
+
+
+            $result = mysqli_query($conn, $sql);
+
+			if (mysqli_num_rows($result) > 0) {
+			    // output data of each row
+			    while($row = mysqli_fetch_assoc($result)) {
+			    	  $_SESSION['email'] = $row['email'];
+            		$_SESSION['familyName'] = $row['name'];
+            		$_SESSION['id'] = $row['id'];
+
+
+
+
+			    	if($row['status'] == 1 ){
+			    		$_SESSION['username'] = $_POST['username'];
+			    		header("location: index.php");
+			    		exit();
+
+			    	}else{
+			    		$_SESSION['admin'] = $_POST['username'];
+			    		header("location: admin.php");
+
+			    		exit();
+			    	}
+
+            die();
+
+        }
+    }
+
+
+        }
+        else{
+            $msg = 'You have entered an invalid username or password';
+        }
+    }
+?>
 	
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('img/bg-01.jpg');">
@@ -35,7 +121,7 @@
 				<span class="login100-form-title p-b-41">
 						Account Login
 				</span>
-				<form class="login100-form validate-form p-b-33 p-t-5">
+				<form class="login100-form validate-form p-b-33 p-t-5" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
 						<input class="input100" type="text" name="username" placeholder="User name">
@@ -43,19 +129,19 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" name="password" placeholder="Password">
 						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
 					</div>
 
 					<div class="container-login100-form-btn m-t-32">
-						<button class="login100-form-btn">
+						<button type="submit" name="login" class="login100-form-btn">
 							Login
 						</button>
 					</div>
-
-					<a href="forgot-password.php">Forget password </a>
-					<div><a href="forgot-password.php">Regiter</a></div>
-
+					<div>
+					<a href="forgot-password.php">Forget password </a><br/>
+					<a href="register.php">Regiter</a></div>
+					 <input style="display:block; margin:0 auto" type="button" onclick="window.location = '<?php echo $loginURL ?>';" value="Log In With Google" class="btn btn-danger">
 				</form>
 			</div>
 		</div>

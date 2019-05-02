@@ -1,3 +1,5 @@
+
+
 <ul class="sidebar navbar-nav">
     <li class="nav-item active">
         <a class="nav-link" href="index.html">
@@ -19,7 +21,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">User:</h6>
-            <a class="dropdown-item" href="user_admin.php">List User</a> <a class="dropdown-item" href="register-admin.php">Register</a>
+            <a class="dropdown-item" href="list_user.php">List User</a> <a class="dropdown-item" href="register-admin.php">Register</a>
         </div>
     </li>
 
@@ -42,7 +44,8 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Phone:</h6>
-            <a class="dropdown-item" href="list_phone.php">List Phone</a> <a class="dropdown-item" href="insert_phone.php">Insert Phone</a>
+            <a class="dropdown-item" href="list_phone.php">List Phone</a> 
+            <a class="dropdown-item" href="insert_phone.php">Insert Phone</a>
         </div>
     </li>
 
@@ -54,8 +57,27 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Producer:</h6>
-            <a class="dropdown-item" href="list_phone.php">List Producer</a> <a class="dropdown-item" href="insert_phone.php">Insert Producer</a>
+            <a class="dropdown-item" href="list_brand.php">List Brands</a> 
+            <a class="dropdown-item" href="insert_brand.php">Insert Brands</a>
         </div>
+    </li>
+
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <i class="fas fa-phone-square"></i>
+            <span>Category</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">category:</h6>
+            <a class="dropdown-item" href="list_category.php">List Category</a> 
+            <a class="dropdown-item" href="insert_category.php">Insert Category</a>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="quanlybuild.php">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Quản lý Bill</span></a>
     </li>
 
 
